@@ -2,6 +2,7 @@ const HomeModel = require('../models/HomeModel')
 
 
 module.exports.paginaInicial = (req, res) => {
+    console.log(req.session.usuario)
     HomeModel.find().then(dado => {
         res.send(`
         <p> ${dado} </p><br>
