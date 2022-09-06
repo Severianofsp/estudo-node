@@ -7,8 +7,24 @@ export class ImageEditorBackupManager {
   constructor(private readonly imageEditor: ImageEditor) {}
 
   backup(): void {
-    this.mementos.push();
+    console.log('Backup: salvando o estado de ImageEditor');
+    this.mementos.push(this.imageEditor.save());
   }
-  execute(): void {}
-  undo(): void {}
+
+  undo(): void {
+    const memento = this.mementos.pop();
+
+    if (!memento) {
+      console.log('BACKUP: no mementos');
+      return;
+    }
+    this.imageEditor.restore(memento);
+    console.log(`BACKUP ${memento.getName()} foi restaurado com sucesso`);
+  }
+
+  showMementos(): void {
+    for (const memento of this.mementos) {
+      console.log(memento);
+    }
+  }
 }
